@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Signup{% endblock %}
+
+{% block custom_css %}<link rel="stylesheet" href="{% static 'css/auth.css'%}">{% endblock %}
+
+{% block navbar %}{% include "components/navbar.html" %}{% endblock %}
+
+{% block contents %}
+<body class="main-bg">
+    <div class="login-container text-c animated flipInX">
+        <h3 class="text-whitesmoke">XenoCTF</h3>
+        <p class="text-whitesmoke">Sign Up</p>
+        <div class="container-content">
+            <form class="margin-t">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Username" required="">
+                </div><br>
+                <div class="form-group">
+                    <input type="email" class="form-control" placeholder="Email" required="">
+                </div><br>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Password" required="">
+                </div><br>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Confirm Password" required="">
+                </div><br>
+                <button type="submit" class="form-button button-l margin-b">Sign Up</button>
+    
+                <p class="text-whitesmoke text-center"><small>Already have an account?</small></p>
+                <a class="text-darkyellow" href="#"><small>Sign In</small></a>
+            </form>
+            <p class="margin-t text-whitesmoke"><small> Powered by XenoCTF &copy; 2025</small> </p>
+        </div>
+    </div>
+</body>
+{% endblock %}
