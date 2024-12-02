@@ -3,6 +3,47 @@
 
 {% block title %}Challenges{% endblock %}
 
+{% block custom_css %}<link rel="stylesheet" href="{% static 'css/challenge.css'%}">{% endblock %}
+
 {% block navbar %}{% include "components/navbar.html" %}{% endblock %}
 
-{% block contents %}{% endblock %}
+{% block contents %}
+<div class="container">
+    <h1>Challenges</h1>
+    <div class="row card-group">
+        <div class="category-title">Multiple Choice</div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title">Trivia</div>
+                    <div class="card-text">42</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title">Trivia</div>
+                    <div class="card-text">42</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="category-title">Forensics</div>
+            <div class="card">
+                <div class="card-title">The Lost Park</div>
+                <div class="card-text">50</div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="category-title">Forensics</div>
+            <div class="card">
+                <div class="card-title">The Lost Park</div>
+                <div class="card-text">50</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

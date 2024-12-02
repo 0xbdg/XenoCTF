@@ -1,19 +1,18 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Players{% endblock %}
+{% block title %}Teams{% endblock %}
 
 {% block navbar %}{% include "components/navbar.html" %}{% endblock %}
 
 {% block contents %}
-<h1>Player</h1>
 <table class="table table-dark">
     <thead>
       <tr>
-        <th scope="col">#</th>
-        <th scope="col">First</th>
-        <th scope="col">Last</th>
-        <th scope="col">Handle</th>
+        <th scope="col">ID</th>
+        <th scope="col">Team</th>
+        <th scope="col">Affiliation</th>
+        <th scope="col">Website</th>
       </tr>
     </thead>
     <tbody>
@@ -31,7 +30,8 @@
       </tr>
       <tr>
         <th scope="row">3</th>
-        <td colspan="2">Larry the Bird</td>
+        <td>Larry the Bird</td>
+        <td>@twitter</td>
         <td>@twitter</td>
       </tr>
     </tbody>
