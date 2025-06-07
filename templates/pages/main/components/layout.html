@@ -1,0 +1,337 @@
+{% load static%}
+{% load tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CTF Competition</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ctf: {
+                            primary: '#3b82f6',
+                            secondary: '#1e40af',
+                            dark: '#0f172a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-ctf-dark text-gray-100 min-h-screen" x-data="app()">
+    
+    <!-- Main content -->
+    <div class="lg:ml-64">
+        <!-- Content -->
+        <main class="p-4 md:p-6">
+            <!-- Challenges View -->
+            <div x-show="currentView === 'challenges'" x-transition>
+                <h1 class="text-2xl font-bold mb-6 flex items-center">
+                    <i class="fas fa-puzzle-piece mr-2"></i> Challenges
+                </h1>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Challenge Cards -->
+                    <template x-for="challenge in challenges" :key="challenge.id">
+                        <div class="bg-gray-800 rounded-lg overflow-hidden border border-gray-700 hover:border-ctf-primary transition-colors">
+                            <div class="p-4">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h3 class="font-bold text-lg" x-text="challenge.name"></h3>
+                                        <div class="flex items-center mt-1">
+                                            <span class="px-2 py-1 text-xs rounded-full" 
+                                                  :class="{
+                                                      'bg-green-900 text-green-300': challenge.difficulty === 'Easy',
+                                                      'bg-yellow-900 text-yellow-300': challenge.difficulty === 'Medium',
+                                                      'bg-red-900 text-red-300': challenge.difficulty === 'Hard'
+                                                  }"
+                                                  x-text="challenge.difficulty"></span>
+                                            <span class="ml-2 text-sm text-gray-400" x-text="challenge.category"></span>
+                                        </div>
+                                    </div>
+                                    <span class="text-ctf-primary font-bold" x-text="challenge.points + ' pts'"></span>
+                                </div>
+                                <p class="mt-3 text-gray-300 text-sm line-clamp-2" x-text="challenge.description"></p>
+                                <div class="mt-4 flex justify-between items-center">
+                                    <span class="text-sm text-gray-400" x-text="challenge.solves + ' solves'"></span>
+                                    <button @click="openChallenge(challenge)" 
+                                            class="px-3 py-1 bg-ctf-primary hover:bg-ctf-secondary rounded text-sm transition-colors">
+                                        View Challenge
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <!-- Scoreboard View -->
+            <div x-show="currentView === 'scoreboard'" x-transition>
+                <h1 class="text-2xl font-bold mb-6 flex items-center">
+                    <i class="fas fa-trophy mr-2"></i> Scoreboard
+                </h1>
+                
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-gray-800 rounded-lg overflow-hidden">
+                        <thead class="bg-gray-700">
+                            <tr>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Rank</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Team</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Score</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Solves</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Last Solve</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-700">
+                            <template x-for="(team, index) in scoreboard" :key="team.id">
+                                <tr :class="{'bg-gray-700 bg-opacity-50': index % 2 === 0}">
+                                    <td class="px-4 py-3 whitespace-nowrap">
+                                        <span x-text="index + 1" class="font-bold"></span>
+                                        <span x-show="index === 0" class="ml-1 text-yellow-400"><i class="fas fa-crown"></i></span>
+                                    </td>
+                                    <td class="px-4 py-3 whitespace-nowrap" x-text="team.name"></td>
+                                    <td class="px-4 py-3 whitespace-nowrap font-bold" x-text="team.score"></td>
+                                    <td class="px-4 py-3 whitespace-nowrap" x-text="team.solves"></td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-400" x-text="team.lastSolve"></td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Challenge Modal -->
+    <div x-show="isChallengeOpen" class="fixed inset-0 z-50 overflow-y-auto" x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 transition-opacity" aria-hidden="true" @click="isChallengeOpen = false">
+                <div class="absolute inset-0 bg-black opacity-75"></div>
+            </div>
+            
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            
+            <div class="inline-block align-bottom bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full"
+                 role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+                <div class="px-6 py-4 border-b border-gray-700">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-xl font-bold" x-text="selectedChallenge.name"></h3>
+                            <div class="flex items-center mt-1">
+                                <span class="px-2 py-1 text-xs rounded-full" 
+                                      :class="{
+                                          'bg-green-900 text-green-300': selectedChallenge.difficulty === 'Easy',
+                                          'bg-yellow-900 text-yellow-300': selectedChallenge.difficulty === 'Medium',
+                                          'bg-red-900 text-red-300': selectedChallenge.difficulty === 'Hard'
+                                      }"
+                                      x-text="selectedChallenge.difficulty"></span>
+                                <span class="ml-2 text-sm text-gray-400" x-text="selectedChallenge.category"></span>
+                                <span class="ml-2 text-sm font-bold text-ctf-primary" x-text="selectedChallenge.points + ' pts'"></span>
+                            </div>
+                        </div>
+                        <button @click="isChallengeOpen = false" class="text-gray-400 hover:text-white">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="px-6 py-4">
+                    <p class="text-gray-300 mb-4" x-text="selectedChallenge.description"></p>
+                    
+                    <div class="mb-4" x-show="selectedChallenge.files.length > 0">
+                        <h4 class="font-bold text-gray-300 mb-2">Files</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <template x-for="file in selectedChallenge.files" :key="file">
+                                <a :href="'/download/' + file" class="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded text-sm transition-colors">
+                                    <i class="fas fa-download mr-1"></i>
+                                    <span x-text="file"></span>
+                                </a>
+                            </template>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <h4 class="font-bold text-gray-300 mb-2">Flag</h4>
+                        <div class="flex">
+                            <input type="text" class="flex-grow px-3 py-2 bg-gray-700 border border-gray-600 rounded-l focus:outline-none focus:ring-1 focus:ring-ctf-primary" placeholder="Enter flag...">
+                            <button class="px-4 py-2 bg-ctf-primary hover:bg-ctf-secondary rounded-r font-medium transition-colors">
+                                Submit
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="text-sm text-gray-400">
+                        <span x-text="selectedChallenge.solves + ' solves'"></span>
+                        <span class="mx-2">•</span>
+                        <span x-text="'Author: ' + selectedChallenge.author"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function app() {
+            return {
+                isSidebarOpen: false,
+                currentView: 'challenges',
+                isChallengeOpen: false,
+                selectedChallenge: {},
+                challenges: [
+                    {
+                        id: 1,
+                        name: "Easy Peasy",
+                        description: "A simple challenge to get you started. Find the flag hidden in the source code of this webpage.",
+                        category: "Web",
+                        difficulty: "Easy",
+                        points: 100,
+                        solves: 42,
+                        author: "admin",
+                        files: ["easy-peasy.zip"]
+                    },
+                    {
+                        id: 2,
+                        name: "Secret Message",
+                        description: "We intercepted this encrypted message. Can you decrypt it to find the flag?",
+                        category: "Crypto",
+                        difficulty: "Medium",
+                        points: 250,
+                        solves: 18,
+                        author: "crypto_lover",
+                        files: ["message.txt", "key.pem"]
+                    },
+                    {
+                        id: 3,
+                        name: "Buffer Overflow",
+                        description: "Exploit the buffer overflow vulnerability in this binary to get a shell and read the flag.",
+                        category: "Pwn",
+                        difficulty: "Hard",
+                        points: 500,
+                        solves: 5,
+                        author: "pwn_expert",
+                        files: ["vuln", "vuln.c"]
+                    },
+                    {
+                        id: 4,
+                        name: "Image Steganography",
+                        description: "There's more to this image than meets the eye. Can you extract the hidden flag?",
+                        category: "Forensics",
+                        difficulty: "Medium",
+                        points: 300,
+                        solves: 12,
+                        author: "forensic_guru",
+                        files: ["suspicious.png"]
+                    },
+                    {
+                        id: 5,
+                        name: "Admin Panel",
+                        description: "Bypass the authentication to access the admin panel and retrieve the flag.",
+                        category: "Web",
+                        difficulty: "Medium",
+                        points: 350,
+                        solves: 8,
+                        author: "web_wizard",
+                        files: []
+                    },
+                    {
+                        id: 6,
+                        name: "Reverse Engineering",
+                        description: "Analyze this binary to understand what it does and find the hidden flag.",
+                        category: "Reversing",
+                        difficulty: "Hard",
+                        points: 450,
+                        solves: 6,
+                        author: "reverser",
+                        files: ["challenge.exe"]
+                    }
+                ],
+                scoreboard: [
+                    {
+                        id: 1,
+                        name: "Team Elite",
+                        score: 2450,
+                        solves: 12,
+                        lastSolve: "5 minutes ago"
+                    },
+                    {
+                        id: 2,
+                        name: "Hackers United",
+                        score: 2300,
+                        solves: 11,
+                        lastSolve: "12 minutes ago"
+                    },
+                    {
+                        id: 3,
+                        name: "CTF Masters",
+                        score: 2150,
+                        solves: 10,
+                        lastSolve: "18 minutes ago"
+                    },
+                    {
+                        id: 4,
+                        name: "Binary Ninjas",
+                        score: 1950,
+                        solves: 9,
+                        lastSolve: "25 minutes ago"
+                    },
+                    {
+                        id: 5,
+                        name: "Security Squad",
+                        score: 1800,
+                        solves: 8,
+                        lastSolve: "32 minutes ago"
+                    },
+                    {
+                        id: 6,
+                        name: "Flag Hunters",
+                        score: 1650,
+                        solves: 7,
+                        lastSolve: "45 minutes ago"
+                    },
+                    {
+                        id: 7,
+                        name: "Code Breakers",
+                        score: 1400,
+                        solves: 6,
+                        lastSolve: "1 hour ago"
+                    },
+                    {
+                        id: 8,
+                        name: "Cyber Warriors",
+                        score: 1200,
+                        solves: 5,
+                        lastSolve: "1.5 hours ago"
+                    },
+                    {
+                        id: 9,
+                        name: "Byte Force",
+                        score: 950,
+                        solves: 4,
+                        lastSolve: "2 hours ago"
+                    },
+                    {
+                        id: 10,
+                        name: "Digital Defenders",
+                        score: 750,
+                        solves: 3,
+                        lastSolve: "3 hours ago"
+                    }
+                ],
+                openChallenge(challenge) {
+                    this.selectedChallenge = challenge;
+                    this.isChallengeOpen = true;
+                }
+            }
+        }
+    </script>
+</body>
+</html>

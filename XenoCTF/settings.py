@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     "main",
     "superuser",
     "accounts",
+    "tailwind",
+    "theme"
 ]
 
 MIDDLEWARE = [
@@ -108,9 +110,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = os.environ.get('LANG_CODE')
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = os.environ.get('TIMEZONE')
 
 USE_I18N = True
 
@@ -132,3 +134,6 @@ MEDIA_URL = "/media/"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+TAILWIND_APP_NAME = 'theme'
+TAILWIND_CSS_PATH = 'css/dist/styles.css'

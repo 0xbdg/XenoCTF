@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 def index(request):
-    return render(request, "pages/main/index.html")
+    return render(request, "pages/main/test.html")
 
 def teams(request):
     return render(request, "pages/main/teams.html")

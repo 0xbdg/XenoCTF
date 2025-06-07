@@ -1,0 +1,47 @@
+{% load static %}
+
+<div x-show="isSidebarOpen" @click="isSidebarOpen = false" 
+             class="fixed inset-0 z-20 bg-black bg-opacity-50 lg:hidden" 
+             x-transition:enter="transition-opacity ease-linear duration-300"
+             x-transition:enter-start="opacity-0"
+             x-transition:enter-end="opacity-100"
+             x-transition:leave="transition-opacity ease-linear duration-300"
+             x-transition:leave-start="opacity-100"
+             x-transition:leave-end="opacity-0">
+</div>
+
+    <!-- Sidebar -->
+<aside class="fixed inset-y-0 left-0 z-30 w-64 bg-ctf-dark border-r border-gray-800 transform lg:translate-x-0 transition-transform duration-300 ease-in-out"
+               :class="{'translate-x-0': isSidebarOpen, '-translate-x-full': !isSidebarOpen}">
+            <div class="flex items-center justify-between px-4 py-3 border-b border-gray-800">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-flag text-ctf-primary text-2xl"></i>
+                <span class="text-xl font-bold">CTF 2023</span>
+            </div>
+            <button @click="isSidebarOpen = false" class="lg:hidden text-gray-400 hover:text-white">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <nav class="p-4">
+            <ul class="space-y-2">
+                <li>
+                    <a href="#" @click="currentView = 'challenges'" 
+                       class="flex items-center px-4 py-2 rounded-lg transition-colors"
+                       :class="{'bg-ctf-primary text-white': currentView === 'challenges', 'text-gray-300 hover:bg-gray-800': currentView !== 'challenges'}">
+                        <i class="fas fa-puzzle-piece mr-3"></i>
+                        Challenges
+                    </a>
+                </li>
+                <li>
+                    <a href="#" @click="currentView = 'scoreboard'" 
+                       class="flex items-center px-4 py-2 rounded-lg transition-colors"
+                       :class="{'bg-ctf-primary text-white': currentView === 'scoreboard', 'text-gray-300 hover:bg-gray-800': currentView !== 'scoreboard'}">
+                        <i class="fas fa-trophy mr-3"></i>
+                        Scoreboard
+                    </a>
+                </li>
+            </ul>
+        </nav>
+</aside>
+
