@@ -8,7 +8,7 @@ export default function ChallengesPage(){
         <SidebarLayout /> 
 
         {/* Main Content */}
-        <main className="flex-1 p-6 bg-gray-700">
+        <main className="flex-1 p-6 bg-gray-800">
           <h1 className="text-2xl font-semibold text-white">Challenges</h1> 
           <div className="mt-4 p-6 flex">
             <ChallengeCard />
