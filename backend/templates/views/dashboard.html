@@ -1,0 +1,217 @@
+{% extends "layout.html"%}
+{% load static %}
+
+{% block title %} Dashboard {% endblock %}
+
+{% block topnav%} {% include 'components/topnav.html' with title="Dashboard" %} {% endblock %}
+
+{% block contents%}
+                <div class="grid grid-cols-1 gap-5 mt-6 sm:grid-cols-2 lg:grid-cols-4">
+                    <div class="p-4 bg-white rounded-lg shadow-xs">
+                        <div class="flex items-center">
+                            <div class="p-3 mr-4 text-orange-500 bg-orange-100 rounded-full">
+                                <i class="fas fa-users text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="mb-2 text-sm font-medium text-gray-600">
+                                    Total Teams
+                                </p>
+                                <p class="text-lg font-semibold text-gray-700">
+                                    42
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4 bg-white rounded-lg shadow-xs">
+                        <div class="flex items-center">
+                            <div class="p-3 mr-4 text-blue-500 bg-blue-100 rounded-full">
+                                <i class="fas fa-flag text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="mb-2 text-sm font-medium text-gray-600">
+                                    Total Challenges
+                                </p>
+                                <p class="text-lg font-semibold text-gray-700">
+                                    15
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4 bg-white rounded-lg shadow-xs">
+                        <div class="flex items-center">
+                            <div class="p-3 mr-4 text-green-500 bg-green-100 rounded-full">
+                                <i class="fas fa-check-circle text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="mb-2 text-sm font-medium text-gray-600">
+                                    Solved Flags
+                                </p>
+                                <p class="text-lg font-semibold text-gray-700">
+                                    187
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4 bg-white rounded-lg shadow-xs">
+                        <div class="flex items-center">
+                            <div class="p-3 mr-4 text-red-500 bg-red-100 rounded-full">
+                                <i class="fas fa-clock text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="mb-2 text-sm font-medium text-gray-600">
+                                    Time Remaining
+                                </p>
+                                <p class="text-lg font-semibold text-gray-700">
+                                    12:34:56
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts -->
+                <div class="grid grid-cols-1 gap-5 mt-6 lg:grid-cols-2">
+                    <div class="p-4 bg-white rounded-lg shadow-xs">
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="text-lg font-semibold text-gray-700">Solve Count</h2>
+                            <div class="flex space-x-2">
+                                <button class="px-2 py-1 text-xs bg-gray-100 rounded-md">Day</button>
+                                <button class="px-2 py-1 text-xs bg-gray-100 rounded-md">Week</button>
+                                <button class="px-2 py-1 text-xs bg-blue-500 text-white rounded-md">Month</button>
+                            </div>
+                        </div>
+                        <canvas id="submissionsChart" height="250"></canvas>
+                    </div>
+                    <div class="p-4 bg-white rounded-lg shadow-xs">
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="text-lg font-semibold text-gray-700">Challenge Categories</h2>
+                            <div class="flex space-x-2">
+                                <button class="px-2 py-1 text-xs bg-gray-100 rounded-md">Solved</button>
+                                <button class="px-2 py-1 text-xs bg-blue-500 text-white rounded-md">Unsolved</button>
+                            </div>
+                        </div>
+                        <canvas id="categoriesChart" height="250"></canvas>
+                    </div>
+                </div>
+
+                <!-- Recent activity and top teams -->
+                <div class="grid grid-cols-1 gap-5 mt-6 lg:grid-cols-2">
+                    <div class="p-4 bg-white rounded-lg shadow-xs">
+                        <h2 class="mb-4 text-lg font-semibold text-gray-700">Recent Activity</h2>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mt-1">
+                                    <div class="flex items-center justify-center w-8 h-8 bg-blue-100 rounded-full">
+                                        <i class="fas fa-flag text-blue-500"></i>
+                                    </div>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm font-medium text-gray-900">Team "Hackers" solved challenge "SQL Injection"</p>
+                                    <p class="text-sm text-gray-500">5 minutes ago</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mt-1">
+                                    <div class="flex items-center justify-center w-8 h-8 bg-green-100 rounded-full">
+                                        <i class="fas fa-user-plus text-green-500"></i>
+                                    </div>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm font-medium text-gray-900">New team "CyberNinjas" registered</p>
+                                    <p class="text-sm text-gray-500">23 minutes ago</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mt-1">
+                                    <div class="flex items-center justify-center w-8 h-8 bg-yellow-100 rounded-full">
+                                        <i class="fas fa-exclamation-triangle text-yellow-500"></i>
+                                    </div>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm font-medium text-gray-900">Team "Noobs" submitted wrong flag for "Reverse Engineering"</p>
+                                    <p class="text-sm text-gray-500">1 hour ago</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mt-1">
+                                    <div class="flex items-center justify-center w-8 h-8 bg-purple-100 rounded-full">
+                                        <i class="fas fa-trophy text-purple-500"></i>
+                                    </div>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm font-medium text-gray-900">First blood! Team "Elite" solved "Buffer Overflow"</p>
+                                    <p class="text-sm text-gray-500">2 hours ago</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-white rounded-lg shadow-xs">
+                        <h2 class="mb-4 text-lg font-semibold text-gray-700">Top Teams</h2>
+                        <div class="overflow-hidden rounded-lg">
+                            <table class="w-full whitespace-nowrap">
+                                <thead>
+                                    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b bg-gray-50">
+                                        <th class="px-4 py-3">Rank</th>
+                                        <th class="px-4 py-3">Team</th>
+                                        <th class="px-4 py-3">Score</th>
+                                        <th class="px-4 py-3">Solved</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y">
+                                    <tr class="text-gray-700">
+                                        <td class="px-4 py-3">
+                                            <div class="flex items-center justify-center w-6 h-6 bg-yellow-100 rounded-full">
+                                                <span class="text-xs font-semibold text-yellow-800">1</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-4 py-3 text-sm font-semibold">Elite Hackers</td>
+                                        <td class="px-4 py-3 text-sm">1250</td>
+                                        <td class="px-4 py-3 text-sm">12/15</td>
+                                    </tr>
+                                    <tr class="text-gray-700">
+                                        <td class="px-4 py-3">
+                                            <div class="flex items-center justify-center w-6 h-6 bg-gray-100 rounded-full">
+                                                <span class="text-xs font-semibold text-gray-800">2</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-4 py-3 text-sm font-semibold">CyberNinjas</td>
+                                        <td class="px-4 py-3 text-sm">1100</td>
+                                        <td class="px-4 py-3 text-sm">10/15</td>
+                                    </tr>
+                                    <tr class="text-gray-700">
+                                        <td class="px-4 py-3">
+                                            <div class="flex items-center justify-center w-6 h-6 bg-orange-100 rounded-full">
+                                                <span class="text-xs font-semibold text-orange-800">3</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-4 py-3 text-sm font-semibold">Binary Bandits</td>
+                                        <td class="px-4 py-3 text-sm">980</td>
+                                        <td class="px-4 py-3 text-sm">9/15</td>
+                                    </tr>
+                                    <tr class="text-gray-700">
+                                        <td class="px-4 py-3">
+                                            <div class="flex items-center justify-center w-6 h-6 rounded-full">
+                                                <span class="text-xs font-semibold text-gray-800">4</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-4 py-3 text-sm font-semibold">Script Kiddies</td>
+                                        <td class="px-4 py-3 text-sm">850</td>
+                                        <td class="px-4 py-3 text-sm">8/15</td>
+                                    </tr>
+                                    <tr class="text-gray-700">
+                                        <td class="px-4 py-3">
+                                            <div class="flex items-center justify-center w-6 h-6 rounded-full">
+                                                <span class="text-xs font-semibold text-gray-800">5</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-4 py-3 text-sm font-semibold">The Hackers</td>
+                                        <td class="px-4 py-3 text-sm">720</td>
+                                        <td class="px-4 py-3 text-sm">7/15</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+{% endblock %}

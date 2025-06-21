@@ -1,5 +1,5 @@
-import SidebarLayout from "../components/Sidebar.jsx"
-import ChallengeCard from "../components/ChallengeCard.jsx" 
+import SidebarLayout from "../Components/Sidebar.jsx"
+import ChallengeCard from "../Components/ChallengeCard.jsx" 
 
 export default function ChallengesPage(){
     return (

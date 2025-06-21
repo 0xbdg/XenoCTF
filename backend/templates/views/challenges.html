@@ -1,0 +1,222 @@
+{% extends 'layout.html' %}
+{% load static%}
+
+{% block title %} Challenge {% endblock %}
+
+{% block topnav%} {% include 'components/topnav.html' with title="Challenges" %} {% endblock %}
+
+{% block contents%}
+
+    <div class="container mx-auto px-4 py-8">
+                
+        <!-- Add New Challenge Button -->
+        <div class="mb-6 flex justify-between items-center">
+            <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md transition-colors">
+                <i class="fas fa-plus mr-2"></i>Add Challenge
+            </button>
+            <div class="relative">
+                <input type="text" placeholder="Search challenges..." class="px-4 py-2 border rounded-md pl-10 w-full md:w-64">
+                <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+            </div>
+        </div>
+        
+        <!-- Responsive Table -->
+        <div class="rounded-lg overflow-hidden shadow-lg">
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-gray-700">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-purple-300 uppercase tracking-wider">ID</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-purple-300 uppercase tracking-wider">Name</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-purple-300 uppercase tracking-wider">Category</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-purple-300 uppercase tracking-wider">Difficulty</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-purple-300 uppercase tracking-wider">Points</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-purple-300 uppercase tracking-wider">Status</th>
+                            <th class="px-6 py-3 text-right text-xs font-medium text-purple-300 uppercase tracking-wider">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-700">
+                        <!-- Challenge 1 -->
+                        <tr class="hover:bg-gray-750 transition-colors">
+                            <td class="px-6 py-4 whitespace-nowrap">1</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <i class="fas fa-flag text-red-500 mr-2"></i>
+                                    <span>SQL Injection</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">Web</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 py-1 text-xs rounded-full bg-yellow-600 text-yellow-100">Medium</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">250</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 py-1 text-xs rounded-full bg-green-600 text-green-100">Active</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right">
+                                <button class="text-blue-400 hover:text-blue-300 mr-3">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="text-red-400 hover:text-red-300">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        
+                        <!-- Challenge 2 -->
+                        <tr class="hover:bg-gray-750 transition-colors">
+                            <td class="px-6 py-4 whitespace-nowrap">2</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <i class="fas fa-flag text-blue-500 mr-2"></i>
+                                    <span>Buffer Overflow</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">Binary</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 py-1 text-xs rounded-full bg-red-600 text-red-100">Hard</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">500</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 py-1 text-xs rounded-full bg-green-600 text-green-100">Active</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right">
+                                <button class="text-blue-400 hover:text-blue-300 mr-3">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="text-red-400 hover:text-red-300">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        
+                        <!-- Challenge 3 -->
+                        <tr class="hover:bg-gray-750 transition-colors">
+                            <td class="px-6 py-4 whitespace-nowrap">3</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <i class="fas fa-flag text-green-500 mr-2"></i>
+                                    <span>Basic Auth</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">Web</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 py-1 text-xs rounded-full bg-green-600 text-green-100">Easy</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">100</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 py-1 text-xs rounded-full bg-gray-600 text-gray-100">Disabled</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right">
+                                <button class="text-blue-400 hover:text-blue-300 mr-3">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="text-red-400 hover:text-red-300">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Pagination -->
+            <div class="px-6 py-4 flex items-center justify-between border-t border-gray-700">
+                <div class="flex-1 flex justify-between sm:hidden">
+                    <button class="relative inline-flex items-center px-4 py-2 border border-gray-700 text-sm font-medium rounded-md text-gray-300 bg-gray-800 hover:bg-gray-700">
+                        Previous
+                    </button>
+                    <button class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-700 text-sm font-medium rounded-md text-gray-300 bg-gray-800 hover:bg-gray-700">
+                        Next
+                    </button>
+                </div>
+                <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                    <div>
+                        <p class="text-sm text-gray-400">
+                            Showing <span class="font-medium">1</span> to <span class="font-medium">3</span> of <span class="font-medium">12</span> challenges
+                        </p>
+                    </div>
+                    <div>
+                        <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                            <button class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-700 bg-gray-800 text-sm font-medium text-gray-400 hover:bg-gray-700">
+                                <span class="sr-only">Previous</span>
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <button aria-current="page" class="z-10 bg-purple-600 border-purple-600 text-white relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                1
+                            </button>
+                            <button class="bg-gray-800 border-gray-700 text-gray-400 hover:bg-gray-700 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                2
+                            </button>
+                            <button class="bg-gray-800 border-gray-700 text-gray-400 hover:bg-gray-700 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                3
+                            </button>
+                            <button class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-700 bg-gray-800 text-sm font-medium text-gray-400 hover:bg-gray-700">
+                                <span class="sr-only">Next</span>
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Modal (hidden by default) -->
+        <div class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true" id="challengeModal">
+            <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                <div class="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+                <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+                <div class="inline-block align-bottom bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                    <div class="bg-gray-800 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                        <h3 class="text-lg leading-6 font-medium text-purple-300 mb-4" id="modal-title">
+                            Add New Challenge
+                        </h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-300">Challenge Name</label>
+                                <input type="text" id="name" class="mt-1 bg-gray-700 text-white focus:ring-purple-500 focus:border-purple-500 block w-full shadow-sm sm:text-sm border-gray-600 rounded-md p-2">
+                            </div>
+                            <div>
+                                <label for="category" class="block text-sm font-medium text-gray-300">Category</label>
+                                <select id="category" class="mt-1 bg-gray-700 text-white focus:ring-purple-500 focus:border-purple-500 block w-full shadow-sm sm:text-sm border-gray-600 rounded-md p-2">
+                                    <option>Web</option>
+                                    <option>Binary</option>
+                                    <option>Crypto</option>
+                                    <option>Forensics</option>
+                                    <option>Misc</option>
+                                </select>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label for="difficulty" class="block text-sm font-medium text-gray-300">Difficulty</label>
+                                    <select id="difficulty" class="mt-1 bg-gray-700 text-white focus:ring-purple-500 focus:border-purple-500 block w-full shadow-sm sm:text-sm border-gray-600 rounded-md p-2">
+                                        <option>Easy</option>
+                                        <option>Medium</option>
+                                        <option>Hard</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="points" class="block text-sm font-medium text-gray-300">Points</label>
+                                    <input type="number" id="points" class="mt-1 bg-gray-700 text-white focus:ring-purple-500 focus:border-purple-500 block w-full shadow-sm sm:text-sm border-gray-600 rounded-md p-2">
+                                </div>
+                            </div>
+                            <div>
+                                <label for="description" class="block text-sm font-medium text-gray-300">Description</label>
+                                <textarea id="description" rows="3" class="mt-1 bg-gray-700 text-white focus:ring-purple-500 focus:border-purple-500 block w-full shadow-sm sm:text-sm border-gray-600 rounded-md p-2"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-800 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                        <button type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-purple-600 text-base font-medium text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:ml-3 sm:w-auto sm:text-sm">
+                            Save
+                        </button>
+                        <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-700 shadow-sm px-4 py-2 bg-gray-700 text-base font-medium text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

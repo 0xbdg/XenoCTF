@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "superuser"
+    "superuser",
+    "tailwind",
+    "theme"
 ]
 
 MIDDLEWARE = [
@@ -106,7 +108,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Jakarta'
 
 USE_I18N = True
 
@@ -124,3 +126,9 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "static/")]
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+NPM_BIN_PATH = 'npm'
+
+TAILWIND_APP_NAME = 'theme'
+
+TAILWIND_CSS_PATH = 'css/dist/styles.css'

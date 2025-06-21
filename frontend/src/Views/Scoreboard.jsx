@@ -1,4 +1,4 @@
-import SidebarLayout from "../components/Sidebar.jsx"
+import SidebarLayout from "../Components/Sidebar.jsx"
 
 export default function ScoreboardPage(){
     return (
