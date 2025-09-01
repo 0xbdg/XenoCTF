@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import *
+from .forms import *
 # Create your views here.
 
 def dashboard(request):
@@ -16,4 +17,5 @@ def teams(request):
     return render(request, "views/teams.html")
 
 def challenge_add(request):
-    return render(request, "views/details/challenge_add.html")
+    form = ChallengeForm()
+    return render(request, "views/details/challenge_add.html", {"form":form})

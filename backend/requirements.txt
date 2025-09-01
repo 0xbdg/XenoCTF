@@ -2,5 +2,6 @@ django
 cookiecutter
 django-tailwind
 django-jazzmin
+django-ckeditor-5
 whitenoise
 pillow
