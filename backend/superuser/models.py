@@ -21,6 +21,7 @@ class Challenge(models.Model):
     category = models.CharField(max_length=100, choices=CATEGORY, blank=False, null=False)
     message = models.TextField(null=False, blank=False)
     status = models.CharField(max_length=100, choices=STATUS, blank=False, null=False)
+    connection = models.CharField(max_length=1000, blank=False,null=False)
     value = models.IntegerField(null=False) 
 
 class Team(models.Model):
