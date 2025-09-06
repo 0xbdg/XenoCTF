@@ -24,17 +24,23 @@ class Challenge(models.Model):
     connection = models.CharField(max_length=1000, blank=False,null=False)
     value = models.IntegerField(null=False) 
 
+class ChallFile(models.Model):
+    chall_id = models.ForeignKey(Challenge, on_delete=models.CASCADE)
+    file = models.FileField(upload_to="chall/")
+
+class ChallFlag(models.Model):
+    chall_id = models.ForeignKey(Challenge, on_delete=models.CASCADE)
+    flag = models.CharField(max_length=1000, null=False, blank=False)
+
+class ChallHint(models.Model):
+    chall_id = models.ForeignKey(Challenge, on_delete=models.CASCADE)
+    hint = models.CharField(max_length=1000, null=False, blank=False)
+
 class Team(models.Model):
     name = models.CharField(max_length=500, null=False, blank=False)
     affiliate = models.CharField(max_length=500, null=False, blank=False)
     total_point = models.IntegerField(null=False)
     player = models.ForeignKey(User, on_delete=models.CASCADE)
-
-class Chall(models.Model):
-    challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE)
-    file = models.FileField(upload_to="chall/")
-    flag = models.CharField(max_length=1000, null=False, blank=False)
-    hint = models.CharField(max_length=1000)
 
 class Activity(models.Model):
     desc = models.TextField(null=False)
