@@ -40,7 +40,10 @@ class Team(models.Model):
     name = models.CharField(max_length=500, null=False, blank=False)
     affiliate = models.CharField(max_length=500, null=False, blank=False)
     total_point = models.IntegerField(null=False)
-    player = models.ForeignKey(User, on_delete=models.CASCADE)
+
+class Player(models.Model):
+    team_id = models.ForeignKey(Team,on_delete=models.CASCADE)
+    player_name = models.CharField(max_length=1000, null=False, blank=False)
 
 class Activity(models.Model):
     desc = models.TextField(null=False)
