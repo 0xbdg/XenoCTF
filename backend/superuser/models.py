@@ -11,11 +11,16 @@ CATEGORY = (
     ("misc", "Misc")
 )
 
+STATUS = (
+    ("visible", "Visible"),
+    ("hidden", "Hidden")
+)
+
 class Challenge(models.Model):
     name = models.CharField(max_length=500, null=False, blank=False)
     category = models.CharField(max_length=100, choices=CATEGORY, blank=False, null=False)
     message = models.TextField(null=False, blank=False)
-    status = models.BooleanField(default=True)
+    status = models.CharField(max_length=100, choices=STATUS, blank=False, null=False)
     value = models.IntegerField(null=False) 
 
 class Team(models.Model):
