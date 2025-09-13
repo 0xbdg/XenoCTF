@@ -121,6 +121,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 MEDIA_URL = 'media/'
 
+MEDIA_ROOT = BASE_DIR / 'media'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static/")]
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -132,3 +133,5 @@ NPM_BIN_PATH = 'npm'
 TAILWIND_APP_NAME = 'theme'
 
 TAILWIND_CSS_PATH = 'css/dist/styles.css'
+
+AUTH_USER_MODEL = 'superuser.Player'

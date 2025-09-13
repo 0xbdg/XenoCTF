@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import *
 # Create your models here.
 
 CATEGORY = (
@@ -25,25 +25,29 @@ class Challenge(models.Model):
     value = models.IntegerField(null=False) 
 
 class ChallFile(models.Model):
-    chall_id = models.ForeignKey(Challenge, on_delete=models.CASCADE)
+    chall = models.ForeignKey(Challenge, on_delete=models.CASCADE)
     file = models.FileField(upload_to="chall/")
 
 class ChallFlag(models.Model):
-    chall_id = models.ForeignKey(Challenge, on_delete=models.CASCADE)
+    chall = models.ForeignKey(Challenge, on_delete=models.CASCADE)
     flag = models.CharField(max_length=1000, null=False, blank=False)
 
 class ChallHint(models.Model):
-    chall_id = models.ForeignKey(Challenge, on_delete=models.CASCADE)
+    chall = models.ForeignKey(Challenge, on_delete=models.CASCADE)
     hint = models.CharField(max_length=1000, null=False, blank=False)
 
 class Team(models.Model):
-    name = models.CharField(max_length=500, null=False, blank=False)
+    team_name = models.CharField(max_length=500, null=False, blank=False)
     affiliate = models.CharField(max_length=500, null=False, blank=False)
     total_point = models.IntegerField(null=False)
 
-class Player(models.Model):
-    team_id = models.ForeignKey(Team,on_delete=models.CASCADE)
-    player_name = models.CharField(max_length=1000, null=False, blank=False)
+class Player(AbstractUser):
+    team = models.ForeignKey(Team,on_delete=models.CASCADE) 
 
 class Activity(models.Model):
     desc = models.TextField(null=False)
+
+class ChallSolved(models.Model):
+    player = models.CharField()
+    chall = models.CharField()
+    team = models.CharField()
