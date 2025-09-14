@@ -9,5 +9,6 @@ urlpatterns = [
     path("teams/", teams, name="team"),
     path("challenge/add/", challenge_add, name="c_add"),
     path("challenge/edit/<int:id>/", challenge_edit, name="c_edit"),
-    path("challenge/delete/<int:id>", challenge_delete, name="c_delete")
+    path("challenge/delete/<int:id>", challenge_delete, name="c_delete"),
+    path("chall/file/delete/<int:file_id>", challfile_delete, name="delete_file")
 ]

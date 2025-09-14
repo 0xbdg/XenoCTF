@@ -15,7 +15,7 @@ class ChallengeForm(forms.ModelForm):
         fields = "__all__"
 
 class ChallMiscForm(forms.Form):
-    file = forms.FileField(widget=FileInput(attrs={"class":"border border-gray-300 rounded px-2 py-1 text-sm","aria-describedby":"file-upload"}))
-    flag = forms.CharField(widget=TextInput(attrs={"class":""}))
-    hint = forms.CharField(widget=TextInput(attrs={"class":""}))
+    file = forms.FileField(required=False,widget=FileInput(attrs={"class":"border border-gray-300 rounded px-2 py-1 text-sm","aria-describedby":"file-upload"}))
+    flag = forms.CharField(required=False,widget=TextInput(attrs={"class":"border border-gray-300 rounded px-2 py-1 text-sm"}))
+    hint = forms.CharField(required=False,widget=TextInput(attrs={"class":"border border-gray-300 rounded px-2 py-1 text-sm"}))
 
