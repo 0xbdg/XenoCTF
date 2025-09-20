@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     Total Teams
                                 </p>
                                 <p class="text-lg font-semibold text-gray-700">
-                                    42
+                                    {{ total_team }}
                                 </p>
                             </div>
                         </div>
@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     Total Challenges
                                 </p>
                                 <p class="text-lg font-semibold text-gray-700">
-                                    15
+                                    {{ total_chall }}
                                 </p>
                             </div>
                         </div>
@@ -126,14 +126,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="p-4 bg-white rounded-lg shadow-xs">
                         <div class="flex items-center">
                             <div class="p-3 mr-4 text-red-500 bg-red-100 rounded-full">
-                                <i class="fas fa-clock text-xl"></i>
+                                <i class="fas fa-user text-xl"></i>
                             </div>
                             <div>
                                 <p class="mb-2 text-sm font-medium text-gray-600">
-                                    Time Remaining
+                                    User
                                 </p>
                                 <p class="text-lg font-semibold text-gray-700">
-                                    12:34:56
+                                    {{total_user}}
                                 </p>
                             </div>
                         </div>

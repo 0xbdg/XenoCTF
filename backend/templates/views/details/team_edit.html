@@ -1,0 +1,128 @@
+{% extends "layout.html"%}
+{% load static %}
+
+{% block title %} Edit Chall {{data.id}} {% endblock %}
+
+{% block topnav %} {% include "components/topnav.html" with title="Edit" %} {% endblock %}
+
+{% block contents %}
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+    <div class="flex flex-col md:flex-row md:space-x-6">
+      <div class="md:w-1/2" x-data="{tab: 'first'}">
+        <nav class="border-b border-gray-300 mb-6">
+          <div class="flex flex-wrap text-sm font-normal text-blue-700">
+            <button :class="{'border border-gray-300 border-b-0 rounded-t px-4 py-2 bg-white text-gray-700':tab === 'first', 'px-4 py-2 hover:underline cursor-pointer':tab != 'first' }" @click.prevent="tab = 'first'">Player</button>
+            <button :class="{'border border-gray-300 border-b-0 rounded-t px-4 py-2 bg-white text-gray-700':tab === 'second', 'px-4 py-2 hover:underline cursor-pointer':tab != 'second' }" @click.prevent="tab = 'second'" class="px-4 py-2 hover:underline cursor-pointer">Solved Chall</button> 
+          </div>
+        </nav>
+
+        <div id="player" x-show="tab === 'first'">
+            <h2 class="text-center text-xl font-normal mb-6">Player</h2>
+            <table class="flex justify-between items-center mb-1 px-4 border w-full table-fixed">
+                    <th class="font-semibold text-sm w-1/3">ID</th>
+                    <th class="font-semibold text-sm w-1/3">Player</th>
+                    <th class="font-semibold text-sm w-1/3">Action</th>
+                    {% for f in file%}
+                    <tr>
+                        <td>{{ forloop.counter}}</td>
+                        <td><a href="/media/{{f.file}}">{{ f.file }}</a></td>
+                        <td><form method="POST" action="{% url 'delete_file' file_id=f.id  %}">{%csrf_token%}<button type="submit">delete</button></form></td>
+                    </tr>
+                    {% endfor %} 
+            </table>
+            <form action="{% url 'c_edit' id=data.id %}" method="POST" enctype="multipart/form-data" class="max-w-lg mx-auto"> 
+                {% csrf_token %}
+                <div class="flex justify-between items-center mb-1 px-4">
+                    <label for="file-upload" class="font-semibold text-sm w-1/3">Select Player</label>
+                </div>
+                <div class="flex items-center px-4">
+                    <select name="player" multiple>
+                        {% for player in users%}
+                            <option value="{{player}}">{{player}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <p id="file-help" class="text-xs text-gray-500 px-4 mt-1 mb-6">Attach multiple files using Control+Click or Cmd+Click.</p>
+                <div class="px-4">
+                    <button type="submit" class="bg-green-600 text-white text-sm font-semibold px-5 py-2 rounded hover:bg-green-700">Upload
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div id="flag" x-show="tab === 'second'">
+            <h2 class="text-center text-xl font-normal mb-6">Flags</h2>
+            <table class="flex justify-between items-center mb-1 px-4 border table-fixed w-full">
+                    <th class="font-semibold text-sm w-1/3">ID</th>
+                    <th class="font-semibold text-sm w-1/3">Title</th>
+                    <th class="font-semibold text-sm w-1/3">Action</th>
+                    <tr>
+                        <td>1</td>
+                        <td>Klhaisdhiashdiauh</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Klhaisdhiashdiauh</td>
+                    </tr>
+            </table>
+            <form method="POST" action="{% url 'c_edit' id=data.id %}" class="max-w-lg mx-auto">
+                {% csrf_token%}
+                <div class="flex justify-between items-center mb-1 px-4">
+                    <label for="file-upload" class="font-semibold text-sm w-1/3">Flags</label>
+                </div>
+                <div class="flex items-center px-4">
+                    {{ form2.flag }} 
+                </div>
+                <p id="file-help" class="text-xs text-gray-500 px-4 mt-1 mb-6">Attach multiple files using Control+Click or Cmd+Click.</p>
+                <div class="px-4">
+                    <button type="submit" class="bg-green-600 text-white text-sm font-semibold px-5 py-2 rounded hover:bg-green-700">Create</button>
+                </div>
+            </form>
+        </div> 
+      </div>
+
+      <!-- Right side -->
+      <div class="md:w-1/2 mt-6 md:mt-0"> 
+        <form action="{% url 'team_edit' id=data.id%}" method="POST" class="mt-6 max-w-lg space-y-4">
+          {% csrf_token %}
+          <label for="challenge-name" class="block text-xs font-semibold text-gray-700 mb-1">
+            Name
+          </label>
+          <label class="block text-xs text-gray-500 mb-2">Challenge Name</label>
+          {{ form.team_name }}
+          <label for="challenge-name" class="block text-xs font-semibold text-gray-700 mb-1">
+            Category
+          </label>
+          <label class="block text-xs text-gray-500 mb-2">Category Challenge</label>
+          {{form.affiliation}}
+          <label for="challenge-name" class="block text-xs font-semibold text-gray-700 mb-1">
+            Message
+          </label>
+          <label class="block text-xs text-gray-500 mb-2">Use this to give a brief introduction to your challenge. </label>
+          {{form.email }}
+          <label for="challenge-name" class="block text-xs font-semibold text-gray-700 mb-1">
+            Connection
+          </label>
+          <label class="block text-xs text-gray-500 mb-2">Connection</label>
+          {{form.status}} 
+          <label for="challenge-name" class="block text-xs font-semibold text-gray-700 mb-1">
+            Value
+          </label>
+          <label class="block text-xs text-gray-500 mb-2">This is how many points teams will receive once they solve this challenge. </label>
+          {{form.banned}}
+          <button type="submit" class="bg-green-600 text-white text-sm font-semibold px-5 py-2 rounded hover:bg-green-700">Upload</button>
+          {% if form.errors %}
+            {% for field in form%}
+                {% for err in field.errors%}
+                    {{err}}
+                {% endfor %}
+            {% endfor %}
+          {% endif %}
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

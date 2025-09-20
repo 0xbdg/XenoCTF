@@ -19,3 +19,13 @@ class ChallMiscForm(forms.Form):
     flag = forms.CharField(required=False,widget=TextInput(attrs={"class":"border border-gray-300 rounded px-2 py-1 text-sm"}))
     hint = forms.CharField(required=False,widget=TextInput(attrs={"class":"border border-gray-300 rounded px-2 py-1 text-sm"}))
 
+class TeamForm(forms.ModelForm):
+    team_name = forms.CharField(required=True, widget=TextInput(attrs={"class":"w-full border border-gray-300 rounded px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600"}))
+    affiliation = forms.CharField(required=True, widget=TextInput(attrs={"class":"w-full border border-gray-300 rounded px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600"}))
+    email = forms.EmailField(widget=EmailInput(attrs={"class":"w-full border border-gray-300 rounded px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600"}))
+    status = forms.ChoiceField(label="Status",required=True,choices=STATUS, widget=Select(attrs={"class":"w-full border border-gray-300 rounded px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600"}))
+    banned = forms.BooleanField(label="banned", initial=False,required=False,widget=CheckboxInput(attrs={"":""}))
+
+    class Meta:
+        model = Team
+        fields = ["team_name", "affiliation", "email", "status", "banned"]

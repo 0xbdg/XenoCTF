@@ -1,7 +1,6 @@
 import os
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
-from django.conf import settings
 
 from XenoCTF.settings import BASE_DIR
 from .models import *
@@ -9,7 +8,11 @@ from .forms import *
 # Create your views here.
 
 def dashboard(request):
-    return render(request, "views/dashboard.html")
+    total_team = Team.objects.count()
+    total_challenge = Challenge.objects.count()
+    total_user = Player.objects.count()
+
+    return render(request, "views/dashboard.html", {"total_team":total_team, "total_chall":total_challenge, "total_user":total_user})
 
 def challenge(request):
     chall = Challenge.objects.all()
@@ -71,8 +74,38 @@ def challfile_delete(request, file_id):
         return redirect("challenge")
 
 def users(request):
-    return render(request, "views/users.html")
+    data = Player.objects.all()
+    return render(request, "views/users.html", {"users":data})
 
 def teams(request):
-    return render(request, "views/teams.html")
+    data = Team.objects.all()
+    return render(request, "views/teams.html", {"teams":data})
 
+def team_add(request):
+    form = TeamForm(data=request.POST)
+
+    if request.method == "POST":
+        if form.is_valid():
+            team_name = form.cleaned_data["team_name"]
+            affiliation = form.cleaned_data["affiliation"]
+            team_email = form.cleaned_data["email"]
+            status = form.cleaned_data["status"]
+            is_banned = form.cleaned_data["banned"]
+            
+            Team(team_name=team_name, affiliation=affiliation, email=team_email, status=status, banned=is_banned, total_point=0).save()
+            return redirect("team")
+
+    else:
+        form = TeamForm()
+    return render(request, "views/details/team_add.html", {"form":form})
+
+def team_edit(request, id):
+    data = Team.objects.get(id=id)
+    form = TeamForm(data=request.POST, instance=data)
+    if request.method == "POST":
+        if form.is_valid():
+            form.save()
+            return redirect("team_edit", data.id)
+    else:
+        form = TeamForm(instance=data)
+    return render(request, "views/details/team_edit.html", {"data":data,"form":form, "player":TeamMember.objects.all(), "users":Player.objects.all()})

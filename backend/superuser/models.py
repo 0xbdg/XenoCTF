@@ -38,16 +38,24 @@ class ChallHint(models.Model):
 
 class Team(models.Model):
     team_name = models.CharField(max_length=500, null=False, blank=False)
-    affiliate = models.CharField(max_length=500, null=False, blank=False)
-    total_point = models.IntegerField(null=False)
+    affiliation = models.CharField(max_length=500, null=False, blank=False)
+    email = models.EmailField()
+    banned = models.BooleanField()
+    status = models.CharField(max_length=100, choices=STATUS, null=False)  
+    total_point = models.IntegerField()
 
-class Player(AbstractUser):
-    team = models.ForeignKey(Team,on_delete=models.CASCADE) 
+class Player(AbstractUser): 
+    hidden = models.CharField(max_length=500, choices=STATUS, null=False)
+    verified = models.BooleanField() 
 
 class Activity(models.Model):
     desc = models.TextField(null=False)
 
 class ChallSolved(models.Model):
-    player = models.CharField()
-    chall = models.CharField()
-    team = models.CharField()
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)
+    chall = models.ForeignKey(Challenge, on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    point = models.IntegerField(null=False)
+
+class TeamMember(models.Model):
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)
