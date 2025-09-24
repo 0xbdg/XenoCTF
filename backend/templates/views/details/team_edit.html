@@ -37,11 +37,7 @@
                     <label for="file-upload" class="font-semibold text-sm w-1/3">Select Player</label>
                 </div>
                 <div class="flex items-center px-4">
-                    <select name="player" multiple>
-                        {% for player in users%}
-                            <option value="{{player}}">{{player}}</option>
-                        {% endfor %}
-                    </select>
+                    {{ form2.player}} 
                 </div>
                 <p id="file-help" class="text-xs text-gray-500 px-4 mt-1 mb-6">Attach multiple files using Control+Click or Cmd+Click.</p>
                 <div class="px-4">

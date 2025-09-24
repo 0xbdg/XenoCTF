@@ -8,7 +8,7 @@
 {% block contents %}
 <div class="container mx-auto px-4 py-8" x-data="{popup:false}"> 
         <div class="mb-6 flex justify-between items-center">
-            <button x-on:click="popup = !popup" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md transition-colors">
+            <button onclick="window.location.href='{% url 'user_add' %}';" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md transition-colors">
                 <i class="fas fa-plus mr-2"></i>Add User
             </button>
             <div class="relative">
@@ -26,25 +26,26 @@
                             <th class="px-6 py-3 text-left text-xs font-medium text-purple-300 uppercase tracking-wider">Username</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-purple-300 uppercase tracking-wider">Email</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-purple-300 uppercase tracking-wider">Is Superuser</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-purple-300 uppercase tracking-wider">Is Active</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-purple-300 uppercase tracking-wider">Is Verify</th>
                             
                             <th class="px-6 py-3 text-right text-xs font-medium text-purple-300 uppercase tracking-wider">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-700">
-                        <!-- Challenge 1 -->
+                        {% for player in data %}
                         <tr class="hover:bg-gray-750 transition-colors">
                             <td class="px-6 py-4 whitespace-nowrap">1</td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
-                                    <span>SQL Injection</span>
+                                    <span>{{player.username}}</span>
                                 </div>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">Web</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{player.email}}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <span class="px-2 py-1 text-xs rounded-full bg-green-600 text-green-100"><i class="fa-solid fa-check"></i></span>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">250</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ player.is_superuser }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ player.verified }}</td>
                             
                             <td class="px-6 py-4 whitespace-nowrap text-right">
                                 <button class="text-blue-400 hover:text-blue-300 mr-3">
@@ -55,55 +56,7 @@
                                 </button>
                             </td>
                         </tr>
-                        
-                        <!-- Challenge 2 -->
-                        <tr class="hover:bg-gray-750 transition-colors">
-                            <td class="px-6 py-4 whitespace-nowrap">2</td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="flex items-center">
-                                    <span>Buffer Overflow</span>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">Binary</td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-2 py-1 text-xs rounded-full bg-red-600 text-red-100"><i class="fa-solid fa-x"></i></span>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">500</td>
-                            
-                            <td class="px-6 py-4 whitespace-nowrap text-right">
-                                <button class="text-blue-400 hover:text-blue-300 mr-3">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="text-red-400 hover:text-red-300">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        
-                        <!-- Challenge 3 -->
-                        <tr class="hover:bg-gray-750 transition-colors">
-                            <td class="px-6 py-4 whitespace-nowrap">3</td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="flex items-center">
-                                    
-                                    <span>Basic Auth</span>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">Web</td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-2 py-1 text-xs rounded-full bg-green-600 text-green-100">Easy</span>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">100</td>
-                            
-                            <td class="px-6 py-4 whitespace-nowrap text-right">
-                                <button class="text-blue-400 hover:text-blue-300 mr-3">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="text-red-400 hover:text-red-300">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
+                        {% endfor %} 
                     </tbody>
                 </table>
             </div>

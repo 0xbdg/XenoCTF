@@ -11,8 +11,9 @@ def dashboard(request):
     total_team = Team.objects.count()
     total_challenge = Challenge.objects.count()
     total_user = Player.objects.count()
+    total_solved = ChallSolved.objects.count()
 
-    return render(request, "views/dashboard.html", {"total_team":total_team, "total_chall":total_challenge, "total_user":total_user})
+    return render(request, "views/dashboard.html", {"total_team":total_team, "total_chall":total_challenge, "total_user":total_user, "total_solved":total_solved})
 
 def challenge(request):
     chall = Challenge.objects.all()
@@ -77,6 +78,30 @@ def users(request):
     data = Player.objects.all()
     return render(request, "views/users.html", {"users":data})
 
+def user_add(request):
+    form = PlayerAddForm(data=request.POST)
+
+    if form.is_valid():
+        form.save()
+        return redirect("user")
+    
+    else:
+        form = PlayerAddForm()
+
+    return render(request, "views/details/user_add.html", {"form":form})
+
+def user_edit(request, id):
+    data = Player.objects.get(id=id)
+    form = PlayerAddForm(data=request.POST, instance=data)
+    if request.method == "POST":
+        if form.is_valid():
+            form.save()
+            return redirect("user_edit", data.id)
+
+    else:
+        pass
+    return render(request,"views/details/team_edit.html", {"data":data})
+
 def teams(request):
     data = Team.objects.all()
     return render(request, "views/teams.html", {"teams":data})
@@ -102,10 +127,20 @@ def team_add(request):
 def team_edit(request, id):
     data = Team.objects.get(id=id)
     form = TeamForm(data=request.POST, instance=data)
+    form2 = TeamPlayerForm(data=request.POST)
+
     if request.method == "POST":
+        
         if form.is_valid():
             form.save()
-            return redirect("team_edit", data.id)
+
+        if form2.is_valid():
+            player_input = form2.cleaned_data["player"]
+
+            TeamMember(player_id=player_input)
+
+        if form.is_valid() or form2.is_valid():
+            return redirect("team_edit", data.id) 
     else:
         form = TeamForm(instance=data)
-    return render(request, "views/details/team_edit.html", {"data":data,"form":form, "player":TeamMember.objects.all(), "users":Player.objects.all()})
+    return render(request, "views/details/team_edit.html", {"data":data,"form":form, "player":TeamMember.objects.all(), "users":Player.objects.all(), "form2":form2})

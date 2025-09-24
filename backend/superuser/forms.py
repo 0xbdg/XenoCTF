@@ -29,3 +29,29 @@ class TeamForm(forms.ModelForm):
     class Meta:
         model = Team
         fields = ["team_name", "affiliation", "email", "status", "banned"]
+
+class TeamPlayerForm(forms.Form):
+    player = forms.ModelMultipleChoiceField(queryset=Player.objects.all())
+
+class PlayerAddForm(forms.ModelForm):
+    first_name = forms.CharField(required=True, widget=TextInput(attrs={"class":"w-full border border-gray-300 rounded px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600"}))
+    last_name = forms.CharField(required=True, widget=TextInput(attrs={"class":"w-full border border-gray-300 rounded px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600"}))
+    username = forms.CharField(required=True, widget=TextInput(attrs={"class":"w-full border border-gray-300 rounded px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600"}))
+    email = forms.EmailField(required=True, widget=EmailInput(attrs={"class":"w-full border border-gray-300 rounded px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600"}))
+    password1 = forms.CharField(required=True, widget=PasswordInput(attrs={"class":"w-full border border-gray-300 rounded px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600"}))
+    password2 = forms.CharField(required=True, widget=PasswordInput(attrs={"class":"w-full border border-gray-300 rounded px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600"})) 
+
+    class Meta:
+        model = Player
+        fields = "__all__"
+
+    def save(self, commit=True):
+        user = super(Player,self).save(commit=False)
+        user.set_password(self.cleaned_data["password2"])
+        user.is_active = True
+        user.is_superuser = False
+
+        if commit:
+            user.save()
+
+        return user
