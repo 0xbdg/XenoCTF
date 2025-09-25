@@ -40,14 +40,16 @@ class PlayerForm(forms.ModelForm):
 
     class Meta:
         model = Player
-        fields = ["username", "email", "password"]
+        fields = ["first_name","last_name","username", "email", "password", "is_superuser", "verified"]
 
     def save(self, commit=True):
         user = super(PlayerForm,self).save(commit=False)
         user.set_password(self.cleaned_data["password"])
+        user.first_name = self.cleaned_data["first_name"]
+        user.last_name = self.cleaned_data["last_name"]
         user.is_active = True
-        user.is_superuser = False
-        user.verified = False
+        user.is_superuser = self.cleaned_data["is_superuser"]
+        user.verified = self.cleaned_data["verified"]
 
         if commit:
             user.save()
