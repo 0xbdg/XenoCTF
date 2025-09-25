@@ -45,8 +45,8 @@ class Team(models.Model):
     total_point = models.IntegerField()
 
 class Player(AbstractUser): 
-    hidden = models.CharField(max_length=500, choices=STATUS)
-    verified = models.BooleanField() 
+    status = models.CharField(max_length=500, choices=STATUS)
+    verified = models.BooleanField(default=False) 
 
 class Activity(models.Model):
     desc = models.TextField(null=False)

@@ -5,14 +5,7 @@
 
 {% block contents %}
 <form method="POST" action="{% url 'user_add'%}" class="space-y-4">
-  {% csrf_token%}
-  <div class="space-y-2">
-    {{form.first_name}} 
-  </div>
-
-  <div class="space-y-2">
-    {{form.last_name}} 
-  </div>
+  {% csrf_token%} 
   <div class="space-y-2">
     {{form.username}} 
   </div>
@@ -21,23 +14,29 @@
     {{form.email}} 
   </div>
   <div class="space-y-2">
-    {{form.password1}} 
+    {{form.password}} 
   </div>
+
   <div class="space-y-2">
-    {{form.password2}} 
+    {{form.status}} 
   </div>
 
   <div class="space-y-2">
     {{ form.is_superuser}}
-    <label class="text-sm font-medium leading-none">Checkbox</label>
+    <label class="text-sm font-medium leading-none">Superuser</label>
+
+  </div>
+   <div class="space-y-2">
+    {{ form.verified}}
+    <label class="text-sm font-medium leading-none">Verify</label>
 
   </div>
 
   <div class="space-y-2">
     <div class="flex items-center space-x-2">
-  <input type="checkbox" class="h-4 w-4 rounded border-primary" />
-  <label class="text-sm font-medium leading-none">Checkbox</label>
-</div>
+        <input type="checkbox" class="h-4 w-4 rounded border-primary" />
+        <label class="text-sm font-medium leading-none">Checkbox</label>
+    </div>
   </div>
 
   <div class="space-y-2">

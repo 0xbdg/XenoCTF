@@ -79,20 +79,20 @@ def users(request):
     return render(request, "views/users.html", {"users":data})
 
 def user_add(request):
-    form = PlayerAddForm(data=request.POST)
+    form = PlayerForm(request.POST)
 
     if form.is_valid():
         form.save()
         return redirect("user")
     
     else:
-        form = PlayerAddForm()
+        form = PlayerForm()
 
     return render(request, "views/details/user_add.html", {"form":form})
 
 def user_edit(request, id):
     data = Player.objects.get(id=id)
-    form = PlayerAddForm(data=request.POST, instance=data)
+    form = PlayerForm(data=request.POST, instance=data)
     if request.method == "POST":
         if form.is_valid():
             form.save()
