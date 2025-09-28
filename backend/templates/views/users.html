@@ -42,9 +42,13 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">{{player.email}}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
+                            {% if player.is_superuser == True%}
                                 <span class="px-2 py-1 text-xs rounded-full bg-green-600 text-green-100"><i class="fa-solid fa-check"></i></span>
+                            {% else%}
+                                <span class="px-2 py-1 text-xs rounded-full bg-red-600 text-green-100"><i class="fa-solid fa-x"></i></span>
+                            {% endif %}
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ player.is_superuser }}</td>
+                           
                             <td class="px-6 py-4 whitespace-nowrap">{{ player.verified }}</td>
                             
                             <td class="px-6 py-4 whitespace-nowrap text-right">

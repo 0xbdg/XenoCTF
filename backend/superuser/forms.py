@@ -31,9 +31,11 @@ class TeamForm(forms.ModelForm):
         fields = ["team_name", "affiliation", "email", "status", "banned"]
 
 class TeamPlayerForm(forms.Form):
-    player = forms.ModelMultipleChoiceField(queryset=Player.objects.all())
+    player = forms.ModelChoiceField(queryset=Player.objects.all(), empty_label="Select player", widget=Select(attrs={"class":"w-full border border-gray-300 rounded px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600"}))
 
 class PlayerForm(forms.ModelForm): 
+    first_name = forms.CharField(widget=TextInput(attrs={"class":"w-full border border-gray-300 rounded px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600"}))
+    last_name = forms.CharField(widget=TextInput(attrs={"class":"w-full border border-gray-300 rounded px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600"}))
     username = forms.CharField(required=True, widget=TextInput(attrs={"class":"w-full border border-gray-300 rounded px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600"}))
     email = forms.EmailField(required=True, widget=EmailInput(attrs={"class":"w-full border border-gray-300 rounded px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600"}))
     password = forms.CharField(required=True, widget=PasswordInput(attrs={"class":"w-full border border-gray-300 rounded px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600"})) 
