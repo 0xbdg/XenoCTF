@@ -137,7 +137,7 @@ def team_edit(request, id):
         if form2.is_valid():
             player_input = form2.cleaned_data["player"]
 
-            TeamMember(team_id=id,player=player_input).save()
+            TeamMember(team_id=id,player_id=Player.objects.get(username=player_input).id).save()
 
         if form.is_valid() or form2.is_valid():
             return redirect("team_edit", data.id) 

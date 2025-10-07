@@ -45,7 +45,7 @@ class Team(models.Model):
     total_point = models.IntegerField()
 
 class Player(AbstractUser):
-    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE, null=True)
     status = models.CharField(max_length=500, choices=STATUS)
     verified = models.BooleanField(default=False) 
 
@@ -60,4 +60,4 @@ class ChallSolved(models.Model):
 
 class TeamMember(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
-    player = models.CharField(max_length=1000)
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)
