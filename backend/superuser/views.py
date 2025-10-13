@@ -106,6 +106,11 @@ def teams(request):
     data = Team.objects.all()
     return render(request, "views/teams.html", {"teams":data})
 
+def team_delete(request, id):
+    if request.method == "POST":
+        Team.objects.get(id=id).delete()
+        return redirect("team")
+
 def team_add(request):
     form = TeamForm(data=request.POST)
 
@@ -136,11 +141,19 @@ def team_edit(request, id):
 
         if form2.is_valid():
             player_input = form2.cleaned_data["player"]
+            team_input = request.POST.get("team_id")
 
-            TeamMember(team_id=id,player_id=Player.objects.get(username=player_input).id).save()
+            if Player.objects.get(username=player_input).team_id != team_input or Player.objects.get(username=player_input).team_id == None:
+                
+
+                e = Player.objects.get(username=player_input)
+                e.team_id=team_input
+
+                e.save()
+                TeamMember(team_id=id,player_id=Player.objects.get(username=player_input).id).save()
 
         if form.is_valid() or form2.is_valid():
             return redirect("team_edit", data.id) 
     else:
         form = TeamForm(instance=data)
-    return render(request, "views/details/team_edit.html", {"data":data,"form":form, "player":TeamMember.objects.all(), "users":Player.objects.all(), "form2":form2})
+    return render(request, "views/details/team_edit.html", {"data":data,"form":form, "player":Player.objects.filter(team_id=id), "users":Player.objects.all(), "form2":form2})
