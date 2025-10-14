@@ -103,6 +103,11 @@ def user_edit(request, id):
         pass
     return render(request,"views/details/team_edit.html", {"data":data})
 
+def user_delete(request, id):
+    if request.method == "POST":
+        Player.objects.get(id=id).delete()
+        return redirect("user")
+
 def teams(request):
     data = Team.objects.all()
     return render(request, "views/teams.html", {"teams":data})

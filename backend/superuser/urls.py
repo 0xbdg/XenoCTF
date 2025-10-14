@@ -9,6 +9,7 @@ urlpatterns = [
     path("users/", users, name="user"),
     path("user/add/", user_add, name="user_add"),
     path("user/edit/<int:id>/", user_edit, name="user_edit"),
+    path("user/delete/<int:id>/", user_delete, name="user_delete"),
     path("teams/", teams, name="team"),
     path("challenge/add/", challenge_add, name="c_add"),
     path("challenge/edit/<int:id>/", challenge_edit, name="c_edit"),
