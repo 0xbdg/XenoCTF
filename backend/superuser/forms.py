@@ -1,3 +1,4 @@
+from django.forms import widgets
 from .models import *
 from django import forms
 from django.forms.widgets import *
@@ -32,6 +33,10 @@ class TeamForm(forms.ModelForm):
 
 class TeamPlayerForm(forms.Form):
     player = forms.ModelChoiceField(queryset=Player.objects.all(), empty_label="Select player", widget=Select(attrs={"class":"w-full border border-gray-300 rounded px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600"}))
+
+class LoginForm(forms.Form):
+    username = forms.CharField(required=True, widget=TextInput(attrs={"class":"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline", "placeholder":"Enter Username"}))
+    password = forms.CharField(required=True,widget=PasswordInput(attrs={"class":"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline","placeholder":"Enter Password"}))
 
 class PlayerForm(forms.ModelForm): 
     first_name = forms.CharField(widget=TextInput(attrs={"class":"w-full border border-gray-300 rounded px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600"}))

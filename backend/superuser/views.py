@@ -1,5 +1,6 @@
 import os
 from django.shortcuts import redirect, render
+from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 
 from XenoCTF.settings import BASE_DIR
@@ -149,11 +150,40 @@ def team_edit(request, id):
                 e = Player.objects.get(username=player_input)
                 e.team_id=team_input
 
-                e.save()
-                TeamMember(team_id=id,player_id=Player.objects.get(username=player_input).id).save()
+                e.save() 
 
         if form.is_valid() or form2.is_valid():
             return redirect("team_edit", data.id) 
     else:
         form = TeamForm(instance=data)
     return render(request, "views/details/team_edit.html", {"data":data,"form":form, "player":Player.objects.filter(team_id=id), "users":Player.objects.all(), "form2":form2})
+
+def signin(request):
+    err_txt = None
+    form = LoginForm(request.POST)
+
+    if request.user.is_authenticated and request.user.is_superuser:
+        return redirect("dashboard")
+
+    if form.is_valid():
+        username = form.cleaned_data["username"]
+        password = form.cleaned_data["password"]
+
+        user = authenticate(request, username=username, password=password)
+        login(request, user)
+        if request.user.is_superuser:
+            return redirect("dashboard") 
+
+        else:
+            err_txt = "Username or password is invalid"
+
+    else:
+        form = LoginForm()
+
+    return render(request,"views/signin.html", {"form":form, "err":err_txt})
+
+@login_required
+def signout(request):
+    if request.method == "POST":
+        logout(request)
+        return redirect("login")

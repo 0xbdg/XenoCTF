@@ -3,6 +3,8 @@ from .views import *
 
 urlpatterns = [
     path("", dashboard, name="dashboard"),
+    path("accounts/login/", signin, name="login"),
+    path("accounts/logout/", signout, name="logout"),
     path("challenges/", challenge, name="challenge"),
     path("users/", users, name="user"),
     path("user/add/", user_add, name="user_add"),
