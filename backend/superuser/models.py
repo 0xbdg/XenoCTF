@@ -57,7 +57,3 @@ class ChallSolved(models.Model):
     chall = models.ForeignKey(Challenge, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     point = models.IntegerField(null=False)
-
-class TeamMember(models.Model):
-    team = models.ForeignKey(Team, on_delete=models.CASCADE)
-    player = models.ForeignKey(Player, on_delete=models.CASCADE)
