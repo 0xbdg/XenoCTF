@@ -1,3 +1,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.dock {
+                display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    position: fixed;
+                    bottom: 10px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background-color: #1f1f1f;
+                    padding: 12px 0;
+                    border-radius: 50px;
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+                }
+        .dock-item {
+                background-color: #2a2a2a;
+                    padding: 12px;
+                    margin: 0 16px;
+                    border-radius: 50%;
+                    transition: transform 0.3s ease, background-color 0.3s ease;
+                    cursor: pointer;
+                }
+        .dock-item:hover {
+                transform: translateY(-8px);
+                    background-color: #333;
+                }
+        .dock-item img {
+                width: 36px;
+                    height: 36px;
+                }

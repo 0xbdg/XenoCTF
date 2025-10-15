@@ -11,8 +11,7 @@ const ChallengeCard = () => {
   };
 
   return (
-    <>
-      {/* Complete Challenge Card */}
+    <> 
       <div className="max-w-sm rounded overflow-hidden shadow-lg bg-gray-800 border border-gray-700 hover:border-blue-500 transition-colors duration-300">
         <div className="px-6 py-4">
           <div className="font-bold text-xl mb-2 text-white">SQL Injection Challenge</div>

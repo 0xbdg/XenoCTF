@@ -4,4 +4,6 @@ django-tailwind
 django-ckeditor-5
 whitenoise
 pillow
-
+markdown
+djangorestframework
+django-filter
