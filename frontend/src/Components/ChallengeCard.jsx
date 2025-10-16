@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const ChallengeCard = () => {
+export default function ChallengeCard({...prop}) { 
   const [isOpen, setIsOpen] = useState(false);
   const [flag, setFlag] = useState('');
 
@@ -13,11 +13,10 @@ const ChallengeCard = () => {
   return (
     <> 
         <button onClick={() => setIsOpen(true)} class="bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
-            <h3 class="text-xl font-medium text-white">Box 1</h3>
-            <p class="text-white mt-2">Description for box 1</p>
+            <h3 class="text-xl font-medium text-white">{prop.chall}</h3>
+            <p class="text-white mt-2">{prop.point}</p>
         </button> 
-
-      {/* Modal */}
+ 
       {isOpen && (
         <div 
           className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70"
@@ -29,7 +28,7 @@ const ChallengeCard = () => {
           >
             <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-gray-700">
               <h3 className="text-xl font-semibold text-white">
-                SQL Injection Challenge
+                {prop.chall}
               </h3>
               <button 
                 type="button" 
@@ -44,8 +43,7 @@ const ChallengeCard = () => {
             </div>
             <div className="p-4 md:p-5 space-y-4">
               <p className="text-base leading-relaxed text-gray-300">
-                <strong>Objective:</strong> Bypass authentication to obtain the flag using SQL injection techniques.
-              </p>
+                <strong>Objective:</strong> {prop.desc} </p>
               <div className="bg-gray-900 p-4 rounded">
                 <p className="text-yellow-400 font-mono text-sm">
                   Hint: Try using a single quote in the username field to test for SQL injection vulnerabilities.
@@ -88,6 +86,4 @@ const ChallengeCard = () => {
       )}
     </>
   );
-};
-
-export default ChallengeCard;
+}

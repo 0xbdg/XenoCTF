@@ -7,7 +7,7 @@ export default function ChallengesPage(){
                 <div>
                     <h2 class="text-2xl font-semibold text-gray-800 mb-4">Category 1</h2>
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                        <ChallengeCard /> 
+                        <ChallengeCard chall="Test" point="200" desc="lorem ipsum dolor sit amet" /> 
                         <ChallengeCard />  
                         <ChallengeCard /> 
                         <ChallengeCard />  
