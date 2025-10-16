@@ -12,30 +12,10 @@ const ChallengeCard = () => {
 
   return (
     <> 
-      <div className="max-w-sm rounded overflow-hidden shadow-lg bg-gray-800 border border-gray-700 hover:border-blue-500 transition-colors duration-300">
-        <div className="px-6 py-4">
-          <div className="font-bold text-xl mb-2 text-white">SQL Injection Challenge</div>
-          <p className="text-gray-300 text-base">
-            Bypass authentication to obtain the flag using SQL injection techniques.
-          </p>
-        </div>
-        <div className="px-6 pt-4 pb-2">
-          <span className="inline-block bg-blue-500 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">
-            Web Security
-          </span>
-          <span className="inline-block bg-green-500 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">
-            Medium
-          </span>
-        </div>
-        <div className="px-6 pb-4">
-          <button 
-            onClick={() => setIsOpen(true)}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          >
-            View Challenge
-          </button>
-        </div>
-      </div>
+        <button onClick={() => setIsOpen(true)} class="bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
+            <h3 class="text-xl font-medium text-white">Box 1</h3>
+            <p class="text-white mt-2">Description for box 1</p>
+        </button> 
 
       {/* Modal */}
       {isOpen && (

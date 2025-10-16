@@ -1,4 +1,3 @@
-import SidebarLayout from "../Components/Sidebar.jsx"
 import ChallengeCard from "../Components/ChallengeCard.jsx" 
 
 export default function ChallengesPage(){
@@ -8,18 +7,10 @@ export default function ChallengesPage(){
                 <div>
                     <h2 class="text-2xl font-semibold text-gray-800 mb-4">Category 1</h2>
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                        <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
-                            <h3 class="text-xl font-medium text-gray-800">Box 1</h3>
-                            <p class="text-gray-600 mt-2">Description for box 1</p>
-                        </div>
-                        <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
-                            <h3 class="text-xl font-medium text-gray-800">Box 2</h3>
-                            <p class="text-gray-600 mt-2">Description for box 2</p>
-                        </div>
-                        <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
-                            <h3 class="text-xl font-medium text-gray-800">Box 3</h3>
-                            <p class="text-gray-600 mt-2">Description for box 3</p>
-                        </div>
+                        <ChallengeCard /> 
+                        <ChallengeCard />  
+                        <ChallengeCard /> 
+                        <ChallengeCard />  
                     </div>
                 </div>
     
