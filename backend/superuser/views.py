@@ -8,6 +8,7 @@ from .models import *
 from .forms import *
 # Create your views here.
 
+@login_required
 def dashboard(request):
     total_team = Team.objects.count()
     total_challenge = Challenge.objects.count()
@@ -164,7 +165,7 @@ def team_edit(request, id):
     return render(request, "views/details/team_edit.html", {"data":data,"form":form, "player":Player.objects.filter(team_id=id), "users":Player.objects.all(), "form2":form2})
 
 def signin(request):
-    err_txt = None
+
     form = LoginForm(request.POST)
 
     if request.user.is_authenticated and request.user.is_superuser:
@@ -175,17 +176,20 @@ def signin(request):
         password = form.cleaned_data["password"]
 
         user = authenticate(request, username=username, password=password)
-        login(request, user)
-        if request.user.is_superuser:
-            return redirect("dashboard") 
 
-        else:
-            err_txt = "Username or password is invalid"
+        if user != None:
+            login(request, user)
+            if user.is_superuser:
+                return redirect("dashboard")
+
+            else:
+                return redirect("login")
+
 
     else:
         form = LoginForm()
 
-    return render(request,"views/signin.html", {"form":form, "err":err_txt})
+    return render(request,"views/signin.html", {"form":form})
 
 @login_required
 def signout(request):
