@@ -2,6 +2,7 @@ import os
 from django.shortcuts import redirect, render
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
+from django.utils import log
 
 from XenoCTF.settings import BASE_DIR
 from .models import *
@@ -16,11 +17,11 @@ def dashboard(request):
     total_solved = ChallSolved.objects.count()
 
     return render(request, "views/dashboard.html", {"total_team":total_team, "total_chall":total_challenge, "total_user":total_user, "total_solved":total_solved})
-
+@login_required
 def challenge(request):
     chall = Challenge.objects.all()
     return render(request, "views/challenges.html", {"challs":chall})
-
+@login_required
 def challenge_add(request):
     form = ChallengeForm(data=request.POST)
 
@@ -32,7 +33,7 @@ def challenge_add(request):
     else:
         form = ChallengeForm()
     return render(request, "views/details/challenge_add.html", {"form":form})
-
+@login_required
 def challenge_edit(request, id):
     data = Challenge.objects.get(id=id)
     form = ChallengeForm(data=request.POST, instance=data)
@@ -64,22 +65,22 @@ def challenge_edit(request, id):
         form = ChallengeForm(instance=data)
         form2 = ChallMiscForm()
     return render(request, "views/details/challenge_edit.html", {"form":form, "data":data, "form2":form2, "file":ChallFile.objects.filter(chall_id=id)})
-
+@login_required
 def challenge_delete(request, id):
     if request.method == "POST":
         Challenge(id=id).delete()
         return redirect("challenge")
-
+@login_required
 def challfile_delete(request, file_id):
     if request.method == "POST":
         os.remove(os.path.join(BASE_DIR,"media/"+ ChallFile.objects.get(id=file_id).file.name))
         ChallFile(id=file_id).delete()
         return redirect("challenge")
-
+@login_required
 def users(request):
     data = Player.objects.all()
     return render(request, "views/users.html", {"users":data})
-
+@login_required
 def user_add(request):
     form = PlayerForm(request.POST)
 
@@ -91,7 +92,7 @@ def user_add(request):
         form = PlayerForm()
 
     return render(request, "views/details/user_add.html", {"form":form})
-
+@login_required
 def user_edit(request, id):
     data = Player.objects.get(id=id)
     form = PlayerForm(data=request.POST, instance=data)
@@ -103,21 +104,21 @@ def user_edit(request, id):
     else:
         pass
     return render(request,"views/details/team_edit.html", {"data":data})
-
+@login_required
 def user_delete(request, id):
     if request.method == "POST":
         Player.objects.get(id=id).delete()
         return redirect("user")
-
+@login_required
 def teams(request):
     data = Team.objects.all()
     return render(request, "views/teams.html", {"teams":data})
-
+@login_required
 def team_delete(request, id):
     if request.method == "POST":
         Team.objects.get(id=id).delete()
         return redirect("team")
-
+@login_required
 def team_add(request):
     form = TeamForm(data=request.POST)
 
@@ -135,7 +136,7 @@ def team_add(request):
     else:
         form = TeamForm()
     return render(request, "views/details/team_add.html", {"form":form})
-
+@login_required
 def team_edit(request, id):
     data = Team.objects.get(id=id)
     form = TeamForm(data=request.POST, instance=data)
@@ -162,7 +163,7 @@ def team_edit(request, id):
             return redirect("team_edit", data.id) 
     else:
         form = TeamForm(instance=data)
-    return render(request, "views/details/team_edit.html", {"data":data,"form":form, "player":Player.objects.filter(team_id=id), "users":Player.objects.all(), "form2":form2})
+    return render(request, "views/details/team_edit.html", {"data":data,"form":form, "player":Player.objects.filter(team_id=id), "solved":ChallSolved.objects.filter(team_id=id), "form2":form2})
 
 def signin(request):
 
@@ -184,8 +185,6 @@ def signin(request):
 
             else:
                 return redirect("login")
-
-
     else:
         form = LoginForm()
 

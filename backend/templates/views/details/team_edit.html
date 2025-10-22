@@ -49,33 +49,19 @@
         </div>
 
         <div id="flag" x-show="tab === 'second'">
-            <h2 class="text-center text-xl font-normal mb-6">Flags</h2>
+            <h2 class="text-center text-xl font-normal mb-6">Solved</h2>
             <table class="flex justify-between items-center mb-1 px-4 border table-fixed w-full">
-                    <th class="font-semibold text-sm w-1/3">ID</th>
-                    <th class="font-semibold text-sm w-1/3">Title</th>
-                    <th class="font-semibold text-sm w-1/3">Action</th>
+                    <th class="font-semibold text-sm w-1/3">Chall</th>
+                    <th class="font-semibold text-sm w-1/3">Player</th>
+                    <th class="font-semibold text-sm w-1/3">Point</th>
+                    {% for s in solved%}
                     <tr>
-                        <td>1</td>
-                        <td>Klhaisdhiashdiauh</td>
+                        <td>{{ s.chall }}</td>
+                        <td>{{ s.player}}</td>
+                        <td{{s.point}}</td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Klhaisdhiashdiauh</td>
-                    </tr>
-            </table>
-            <form method="POST" action="{% url 'c_edit' id=data.id %}" class="max-w-lg mx-auto">
-                {% csrf_token%}
-                <div class="flex justify-between items-center mb-1 px-4">
-                    <label for="file-upload" class="font-semibold text-sm w-1/3">Flags</label>
-                </div>
-                <div class="flex items-center px-4">
-                    {{ form2.flag }} 
-                </div>
-                <p id="file-help" class="text-xs text-gray-500 px-4 mt-1 mb-6">Attach multiple files using Control+Click or Cmd+Click.</p>
-                <div class="px-4">
-                    <button type="submit" class="bg-green-600 text-white text-sm font-semibold px-5 py-2 rounded hover:bg-green-700">Create</button>
-                </div>
-            </form>
+                    {% endfor%} 
+            </table> 
         </div> 
       </div>
 
