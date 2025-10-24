@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     "superuser",
     "tailwind",
     "theme",
-    "rest_framework"
+    "rest_framework",
+    "api"
 ]
 
 MIDDLEWARE = [
@@ -70,6 +71,12 @@ TEMPLATES = [
         },
     },
 ]
+
+REST_FRAMEWORK = { 
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
 
 WSGI_APPLICATION = 'XenoCTF.wsgi.application'
 

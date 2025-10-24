@@ -36,9 +36,44 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
 
-            // Categories chart
-            const categoriesCtx = document.getElementById('categoriesChart').getContext('2d');
-            const categoriesChart = new Chart(categoriesCtx, {
+           
+            const solvedCtx = document.getElementById('solvedChart').getContext('2d');
+            const solvedChart = new Chart(solvedCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Web', 'Crypto', 'Forensics', 'Binary', 'OSINT','Misc'],
+                    datasets: [{
+                        data: [3, 5, 2, 1, 5, 3],
+                        backgroundColor: [
+                            'rgba(59, 130, 246, 0.7)',
+                            'rgba(16, 185, 129, 0.7)',
+                            'rgba(245, 158, 11, 0.7)',
+                            'rgba(139, 92, 246, 0.7)',
+                            'rgba(239, 68, 68, 0.7)',
+                            'rgba(275, 110, 30, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(59, 130, 246, 1)',
+                            'rgba(16, 185, 129, 1)',
+                            'rgba(245, 158, 11, 1)',
+                            'rgba(139, 92, 246, 1)',
+                            'rgba(239, 68, 68, 1)',
+                            'rgba(275, 110, 30, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                        }
+                    }
+                }
+            });
+            const unsolvedCtx = document.getElementById('unsolvedChart').getContext('2d');
+            const unsolvedChart = new Chart(unsolvedCtx, {
                 type: 'doughnut',
                 data: {
                     labels: ['Web', 'Crypto', 'Forensics', 'Binary', 'OSINT','Misc'],
@@ -72,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 }
             });
-        });
+});
 
 {% endblock %}
 
@@ -150,15 +185,20 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                         <canvas id="submissionsChart" height="250"></canvas>
                     </div>
-                    <div class="p-4 bg-white rounded-lg shadow-xs">
+                    <div class="p-4 bg-white rounded-lg shadow-xs" x-data="{tab: 'solved'}">
                         <div class="flex items-center justify-between mb-4">
                             <h2 class="text-lg font-semibold text-gray-700">Challenge Categories</h2>
                             <div class="flex space-x-2">
-                                <button type="button" class="px-2 py-1 text-xs bg-gray-100 rounded-md">Solved</button>
-                                <button type="button" class="px-2 py-1 text-xs bg-blue-500 text-white rounded-md">Unsolved</button>
+                                <button @click.prevent="tab = 'solved'" :class="{'px-2 py-1 text-xs bg-blue-500 text-white rounded-md':tab == 'solved','px-2 py-1 text-xs bg-gray-100 rounded-md':tab != 'solved'}">Solved</button>
+                                <button @click.prevent="tab = 'unsolved'" :class="{'px-2 py-1 text-xs bg-blue-500 text-white rounded-md':tab == 'unsolved', 'px-2 py-1 text-xs bg-gray-100 rounded-md':tab != 'unsolved'}">Unsolved</button>
                             </div>
                         </div>
-                        <canvas id="categoriesChart" height="250"></canvas>
+                        <div x-show="tab == 'solved'">  
+                            <canvas id="solvedChart" height="250"></canvas>
+                        </div>
+                        <div x-show="tab == 'unsolved'">  
+                            <canvas id="unsolvedChart" height="250"></canvas>
+                        </div>
                     </div>
                 </div>
 
