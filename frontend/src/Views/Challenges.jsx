@@ -1,19 +1,37 @@
-import ChallengeCard from "../Components/ChallengeCard.jsx" 
+import { useState, useEffect } from "react";
+import ChallengeCard from "../Components/ChallengeCard.jsx"
+import axios from "axios";
 
-export default function ChallengesPage(){
+export default function ChallengesPage() {
+    const [challData, setChallData] = useState([]);
+    useEffect(() => {
+        axios.get("http://127.0.0.1:8000/api/test/challenge/")
+            .then((response) => {
+                setChallData(response.data);
+            })
+            .catch((err) => {
+                console.error(err);
+            })
+    }, []);
     return (
         <div class="container mx-auto p-6">
             <div class="space-y-8">
                 <div>
-                    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Category 1</h2>
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Web Exploitation</h2>
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                        <ChallengeCard chall="Test" point="200" desc="lorem ipsum dolor sit amet" /> 
-                        <ChallengeCard />  
-                        <ChallengeCard /> 
-                        <ChallengeCard />  
+                        {challData.map((d) => {
+                            const data = {
+                                chall: d.name,
+                                point: d.value,
+                                desc: d.message
+                            }
+                            if (d.category == "web") {
+                                return <ChallengeCard key={d.id} {...data} />
+                            }
+                        })}
                     </div>
                 </div>
-    
+
                 <div>
                     <h2 class="text-2xl font-semibold text-gray-800 mb-4">Category 2</h2>
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -53,17 +71,3 @@ export default function ChallengesPage(){
         </div>
     )
 }
-
-// <div className="bg-gray-700">
-//      <div className="flex h-screen">
-//        <SidebarLayout /> 
-// 
-//        <main className="flex-1 p-6 bg-gray-800">
-//          <h1 className="text-2xl font-semibold text-white">Challenges</h1> 
-//          <div className="mt-4 p-6 flex">
-//            <ChallengeCard />
-//            <ChallengeCard />
-//          </div>
-//        </main>
-//      </div>
-//    </div>
