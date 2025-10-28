@@ -63,7 +63,7 @@ def challenge_edit(request, id):
     else:
         form = ChallengeForm(instance=data)
         form2 = ChallMiscForm()
-    return render(request, "views/details/challenge_edit.html", {"form":form, "data":data, "form2":form2, "file":ChallFile.objects.filter(chall_id=id)})
+    return render(request, "views/details/challenge_edit.html", {"form":form, "data":data, "form2":form2, "file":ChallFile.objects.filter(chall_id=id), "flag":ChallFlag.objects.filter(chall_id=id), "hint":ChallHint.objects.filter(chall_id=id)})
 @login_required
 def challenge_delete(request, id):
     if request.method == "POST":
@@ -75,6 +75,19 @@ def challfile_delete(request, file_id):
         os.remove(os.path.join(BASE_DIR,"media/"+ ChallFile.objects.get(id=file_id).file.name))
         ChallFile(id=file_id).delete()
         return redirect("challenge")
+
+@login_required
+def challhint_delete(request, hint_id):
+    if request.method == "POST":
+        ChallHint(id=hint_id).delete()
+        return redirect("challenge")
+
+@login_required
+def challflag_delete(request, flag_id):
+    if request.method == "POST":
+        ChallFlag(id=flag_id).delete()
+        return redirect("challenge")
+
 @login_required
 def users(request):
     data = Player.objects.all()

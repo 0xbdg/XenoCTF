@@ -54,14 +54,13 @@
                     <th class="font-semibold text-sm w-1/3">ID</th>
                     <th class="font-semibold text-sm w-1/3">Title</th>
                     <th class="font-semibold text-sm w-1/3">Action</th>
+                    {% for f in flag%}
                     <tr>
-                        <td>1</td>
-                        <td>Klhaisdhiashdiauh</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Klhaisdhiashdiauh</td>
-                    </tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ f.flag }}</td>
+                        <td><form action="{% url 'delete_flag' flag_id=f.id%}" method="post">{% csrf_token%}<button type="submit">Delete</button></form></td>
+                    </tr> 
+                    {% endfor %}
             </table>
             <form method="POST" action="{% url 'c_edit' id=data.id %}" class="max-w-lg mx-auto">
                 {% csrf_token%}
@@ -91,15 +90,15 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% for h in hint%}
                         <tr class="flex justify-between items-center">
-                            <td class="w-1/3">1</td>
-                            <td class="w-1/3 truncate">Klhaisdhiashdiauh</td>
+                            <td class="w-1/3">{{ forloop.counter}}</td>
+                            <td class="w-1/3 truncate">{{ h.hint}}</td>
                             <td class="items-center">
-                                <button>
-                                    Delete
-                                </button>
+                                <form action="{% url 'delete_hint' hint_id=h.id %}" method="POST">{% csrf_token%}<button type="submit">Delete</button></form>
                             </td>
                         </tr>
+                        {% endfor %}
                        
                     </tbody>
                 </table>
@@ -116,8 +115,7 @@
             </form>
         </div>
       </div>
-
-      <!-- Right side -->
+ 
       <div class="md:w-1/2 mt-6 md:mt-0"> 
         <form action="{% url 'c_edit' id=data.id%}" method="POST" class="mt-6 max-w-lg space-y-4">
           {% csrf_token %}

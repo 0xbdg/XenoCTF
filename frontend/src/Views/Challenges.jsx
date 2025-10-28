@@ -23,7 +23,8 @@ export default function ChallengesPage() {
                             const data = {
                                 chall: d.name,
                                 point: d.value,
-                                desc: d.message
+                                desc: d.message,
+                                conn: d.connection
                             }
                             if (d.category == "web") {
                                 return <ChallengeCard key={d.id} {...data} />
