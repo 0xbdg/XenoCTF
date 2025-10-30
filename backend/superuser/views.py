@@ -14,8 +14,12 @@ def dashboard(request):
     total_challenge = Challenge.objects.count()
     total_user = Player.objects.count()
     total_solved = ChallSolved.objects.count()
+    top_team = ChallSolved.objects.all()
 
-    return render(request, "views/dashboard.html", {"total_team":total_team, "total_chall":total_challenge, "total_user":total_user, "total_solved":total_solved})
+    if total_solved >= 0:
+        top_team = ChallSolved.objects.all()[:5]
+
+    return render(request, "views/dashboard.html", {"total_team":total_team, "total_chall":total_challenge, "total_user":total_user, "total_solved":total_solved, "tops":top_team})
 @login_required
 def challenge(request):
     chall = Challenge.objects.all()
@@ -32,6 +36,7 @@ def challenge_add(request):
     else:
         form = ChallengeForm()
     return render(request, "views/details/challenge_add.html", {"form":form})
+
 @login_required
 def challenge_edit(request, id):
     data = Challenge.objects.get(id=id)
@@ -71,27 +76,31 @@ def challenge_delete(request, id):
         return redirect("challenge")
 @login_required
 def challfile_delete(request, file_id):
+    d = ChallFile.objects.get(id=file_id)
     if request.method == "POST":
         os.remove(os.path.join(BASE_DIR,"media/"+ ChallFile.objects.get(id=file_id).file.name))
         ChallFile(id=file_id).delete()
-        return redirect("challenge")
+        return redirect("c_edit",d.chall_id)
 
 @login_required
 def challhint_delete(request, hint_id):
+    d = ChallHint.objects.get(id=hint_id)
     if request.method == "POST":
         ChallHint(id=hint_id).delete()
-        return redirect("challenge")
+        return redirect("c_edit", d.chall_id)
 
 @login_required
 def challflag_delete(request, flag_id):
+    d = ChallFlag.objects.get(id=flag_id)
     if request.method == "POST":
         ChallFlag(id=flag_id).delete()
-        return redirect("challenge")
+        return redirect("c_edit", d.chall_id)
 
 @login_required
 def users(request):
     data = Player.objects.all()
     return render(request, "views/users.html", {"users":data})
+
 @login_required
 def user_add(request):
     form = PlayerForm(request.POST)
@@ -177,8 +186,16 @@ def team_edit(request, id):
         form = TeamForm(instance=data)
     return render(request, "views/details/team_edit.html", {"data":data,"form":form, "player":Player.objects.filter(team_id=id), "solved":ChallSolved.objects.filter(team_id=id), "form2":form2})
 
-def signin(request):
+@login_required
+def team_player_delete(request, id):
+    if request.method == "POST":
+        u = Player.objects.get(team_id=id)
+        u.team = None
+        u.save()
 
+        return redirect("team")
+
+def signin(request):
     form = LoginForm(request.POST)
 
     if request.user.is_authenticated and request.user.is_superuser:

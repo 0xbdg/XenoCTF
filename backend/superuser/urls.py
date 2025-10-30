@@ -19,5 +19,6 @@ urlpatterns = [
     path("chall/hint/delete/<int:hint_id>", challhint_delete, name="delete_hint"),
     path("team/add/", team_add, name="team_add"),
     path("team/edit/<int:id>/", team_edit, name="team_edit"),
-    path("team/delete/<int:id>/", team_delete, name="team_delete")
+    path("team/delete/<int:id>/", team_delete, name="team_delete"),
+    path("team/player/delete/<int:id>/", team_player_delete, name="team_player_delete")
 ]

@@ -28,7 +28,7 @@
                     <tr>
                         <td>{{ forloop.counter}}</td>
                         <td><a href="/media/{{f.file}}">{{ f.file }}</a></td>
-                        <td><form method="POST" action="{% url 'delete_file' file_id=f.id  %}">{%csrf_token%}<button type="submit">delete</button></form></td>
+                        <td><form method="POST" action="{% url 'delete_file' file_id=f.id%}">{%csrf_token%}<button type="submit">delete</button></form></td>
                     </tr>
                     {% endfor %} 
             </table>

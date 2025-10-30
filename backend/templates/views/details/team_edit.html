@@ -27,7 +27,7 @@
                     <tr>
                         <td>{{ forloop.counter}}</td>
                         <td>{{ p.username}}</td>
-                        <td><form method="POST" action="">{%csrf_token%}<button type="submit">delete</button></form></td>
+                        <td><form method="POST" action="{% url 'team_player_delete' id=p.id %}">{%csrf_token%}<button type="submit">delete</button></form></td>
                     </tr>
                     {% endfor %} 
             </table>
@@ -65,7 +65,6 @@
         </div> 
       </div>
 
-      <!-- Right side -->
       <div class="md:w-1/2 mt-6 md:mt-0"> 
         <form action="{% url 'team_edit' id=data.id%}" method="POST" class="mt-6 max-w-lg space-y-4">
           {% csrf_token %}
