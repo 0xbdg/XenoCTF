@@ -123,8 +123,9 @@ def user_edit(request, id):
             return redirect("user_edit", data.id)
 
     else:
-        pass
-    return render(request,"views/details/team_edit.html", {"data":data})
+        form = PlayerForm(instance=data)
+    return render(request,"views/details/user_edit.html", {"data":data,"form":form})
+
 @login_required
 def user_delete(request, id):
     if request.method == "POST":

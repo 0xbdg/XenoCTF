@@ -3,7 +3,7 @@ from rest_framework import routers
 from .views import *
 
 router = routers.DefaultRouter()
-router.register("challenge", ChallengeView)
-router.register("challenge/file", ChallFileView)
+router.register("challenge", ChallengeAPIView)
+router.register("file", ChallFileAPIView)
 
 urlpatterns = [path("test/", include(router.urls))]

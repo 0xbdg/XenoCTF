@@ -3,13 +3,14 @@ from rest_framework.renderers import JSONRenderer
 from .serializer import *
 # Create your views here.
 
-class ChallengeView(viewsets.ReadOnlyModelViewSet):
+class ChallengeAPIView(viewsets.ReadOnlyModelViewSet):
     permission_classes = [permissions.AllowAny]
     renderer_classes= [JSONRenderer]
     queryset = Challenge.objects.all()
     serializer_class = ChallengeSerializer
 
-class ChallFileView(viewsets.ReadOnlyModelViewSet):
+class ChallFileAPIView(viewsets.ReadOnlyModelViewSet):
     permission_classes = [permissions.AllowAny]
+    renderer_classes = [JSONRenderer]
     queryset = ChallFile.objects.all()
     serializer_class = ChallFileSerializer

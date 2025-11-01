@@ -38,16 +38,19 @@ class LoginForm(forms.Form):
     username = forms.CharField(required=True, widget=TextInput(attrs={"class":"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline", "placeholder":"Enter Username"}))
     password = forms.CharField(required=True,widget=PasswordInput(attrs={"class":"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline","placeholder":"Enter Password"}))
 
+class PlayerUpdateForm(forms.ModelForm):
+    pass
+
 class PlayerForm(forms.ModelForm): 
     first_name = forms.CharField(widget=TextInput(attrs={"class":"w-full border border-gray-300 rounded px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600"}))
     last_name = forms.CharField(widget=TextInput(attrs={"class":"w-full border border-gray-300 rounded px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600"}))
     username = forms.CharField(required=True, widget=TextInput(attrs={"class":"w-full border border-gray-300 rounded px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600"}))
     email = forms.EmailField(required=True, widget=EmailInput(attrs={"class":"w-full border border-gray-300 rounded px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600"}))
-    password = forms.CharField(required=True, widget=PasswordInput(attrs={"class":"w-full border border-gray-300 rounded px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600"})) 
+    password = forms.CharField(widget=PasswordInput(attrs={"class":"w-full border border-gray-300 rounded px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600"})) 
 
     class Meta:
         model = Player
-        fields = ["first_name","last_name","username", "email", "password", "is_superuser", "verified"]
+        fields = "__all__"
 
     def save(self, commit=True):
         user = super(PlayerForm,self).save(commit=False)
